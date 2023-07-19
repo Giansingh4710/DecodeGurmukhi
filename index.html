@@ -41,7 +41,10 @@
       const punjabi_word = e.target.value
       let weird_word = ''
       for (let letter of punjabi_word) {
-        // const weird_letter = pun_to_weird[letter]
+        if (letter === ' ') {
+          weird_word += ' '
+          continue
+        }
         const weird_letter = obj[letter]
         if (weird_letter === undefined) {
           weird_word = 'Error: "' + letter + '" is not a valid Punjabi letter'
