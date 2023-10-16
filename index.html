@@ -46,8 +46,8 @@
       let hexRepresentation = ''
       for (let i = 0; i < word.length; i++) {
         const charCode = word.charCodeAt(i)
-        const hexString = charCode.toString(16);
-        hexRepresentation += "\\u" + ("0000" + hexString).slice(-4);
+        const hexString = charCode.toString(16)
+        hexRepresentation += '\\u' + ('0000' + hexString).slice(-4)
       }
       log.textContent = hexRepresentation
       return hexRepresentation
@@ -73,9 +73,18 @@
     }
 
     function copy() {
-      navigator.clipboard.writeText(log.textContent)
-      alert('Copied to clipboard')
-    }
+      const textElement = document.getElementById('log')
+      const range = document.createRange()
+      range.selectNode(textElement)
 
+      const selection = window.getSelection()
+      selection.removeAllRanges() // Clear any existing selection
+      selection.addRange(range)
+
+      document.execCommand('copy')
+      selection.removeAllRanges() // Deselect the text
+
+      alert('Text copied to clipboard') //:' + textElement.textContent)
+    }
   </script>
 </html>
