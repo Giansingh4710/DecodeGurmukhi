@@ -1,59 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suraj Parkash Decoding</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suraj Parkash Decoding</title>
-</head>
-
-<body>
-  <h1>Suraj Parkash Decoding</h1>
-  <div>
-    <h4>Gurmukhi To Korean</h4>
-    <input type="text" id="inputWeird" placeholder="Enter the text to decode"
-      oninput="get_weird_from_pun(event,pun_to_weird)" />
-    <h4>Gurmukhi To English</h4>
-    <input type="text" id="inputEng" placeholder="Enter the text to decode"
-      oninput="get_weird_from_pun(event,pun_to_eng)" />
-    <h4>English To Gurmukhi</h4>
-    <input type="text" id="inputEng" placeholder="Enter the text to decode"
-      oninput="get_weird_from_pun(event,eng_to_pun)" />
-    <h4>Korean To Gurmukhi</h4>
-    <input type="text" id="inputEng" placeholder="Enter the text to decode"
-      oninput="get_weird_from_pun(event,weird_to_pun)" />
+  <body>
+    <h1>Suraj Parkash Decoding</h1>
+    <div>
+      <h4>Gurmukhi To Korean</h4>
+      <input
+        placeholder="Enter the text to decode"
+        oninput="get_weird_from_pun(event,pun_to_weird)"
+      />
+      <h4>Gurmukhi To English</h4>
+      <input
+        placeholder="Enter the text to decode"
+        oninput="get_weird_from_pun(event,pun_to_eng)"
+      />
+      <h4>English To Gurmukhi</h4>
+      <input
+        placeholder="Enter the text to decode"
+        oninput="get_weird_from_pun(event,eng_to_pun)"
+      />
+      <h4>Korean To Gurmukhi</h4>
+      <input
+        placeholder="Enter the text to decode"
+        oninput="get_weird_from_pun(event,weird_to_pun)"
+      />
+      <h4>Gurmukhi to Hexadecimal</h4>
+      <input
+        placeholder="Enter the text to decode"
+        oninput="gurmukhiToHex(event.target.value)"
+      />
+    </div>
     <p id="log"></p>
-  </div>
-</body>
-<script src="script.js"></script>
-<script>
-  const inputWeird = document.getElementById('inputWeird')
-  const inputEng = document.getElementById('inputEng')
-  const log = document.getElementById('log')
-
-  // inputWeird.addEventListener('input', (e) => {
-  // log.textContent = get_weird_from_pun(e.target.value)
-  // })
-
-  function get_weird_from_pun(e, obj) {
-    const punjabi_word = e.target.value
-    let weird_word = ''
-    for (let letter of punjabi_word) {
-      if (letter === ' ') {
-        weird_word += ' '
-        continue
+    <button onclick="copy()">Copy Output</button>
+  </body>
+  <script src="script.js"></script>
+  <script>
+    const log = document.getElementById('log')
+    function gurmukhiToHex(word) {
+      let hexRepresentation = ''
+      for (let i = 0; i < word.length; i++) {
+        const charCode = word.charCodeAt(i)
+        const hexString = charCode.toString(16);
+        hexRepresentation += "\\u" + ("0000" + hexString).slice(-4);
       }
-      const weird_letter = obj[letter]
-      if (weird_letter === undefined) {
-        weird_word += '(' + letter + ')'
-      }else{
-        weird_word += weird_letter
-      }
+      log.textContent = hexRepresentation
+      return hexRepresentation
     }
-    log.textContent = weird_word
-    return weird_word
-  }
-</script>
 
+    function get_weird_from_pun(e, obj) {
+      const punjabi_word = e.target.value
+      let weird_word = ''
+      for (let letter of punjabi_word) {
+        if (letter === ' ') {
+          weird_word += ' '
+          continue
+        }
+        const weird_letter = obj[letter]
+        if (weird_letter === undefined) {
+          weird_word += '(' + letter + ')'
+        } else {
+          weird_word += weird_letter
+        }
+      }
+      log.textContent = weird_word
+      return weird_word
+    }
+
+    function copy() {
+      navigator.clipboard.writeText(log.textContent)
+      alert('Copied to clipboard')
+    }
+
+  </script>
 </html>
